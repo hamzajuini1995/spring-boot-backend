@@ -53,4 +53,15 @@ public class InvoiceServiceImplTest {
         Invoice invoiceResult = optionalInvoice.get();
         assertThat(invoiceResult.getArchived(),is(true));
     }
+
+    @Test
+    public void testRetreiveInvoice() {
+        Invoice invoice1 = new Invoice(2L, 20.0f, 300.0f, new Date(), new Date(), false, new HashSet<>(), null);
+        given(invoiceRepository.findById(2L)).willReturn(Optional.of(invoice1));
+        Invoice invoice = invoiceService.retrieveInvoice(2L);
+        assertThat(invoice,is(notNullValue()));
+        assertThat(invoice,is(invoice1));
+    }
+
+
 }

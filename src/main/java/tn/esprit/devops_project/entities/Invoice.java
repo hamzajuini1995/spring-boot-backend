@@ -2,6 +2,7 @@ package tn.esprit.devops_project.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,6 +40,29 @@ public class Invoice implements Serializable {
     @ManyToOne
     @JsonIgnore
     Supplier supplier;
+
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Invoice invoice = (Invoice) o;
+		return Float.compare(invoice.amountDiscount, amountDiscount) == 0 &&
+				Float.compare(invoice.amountInvoice, amountInvoice) == 0 &&
+				Objects.equals(idInvoice, invoice.idInvoice) &&
+				Objects.equals(dateCreationInvoice, invoice.dateCreationInvoice) &&
+				Objects.equals(dateLastModificationInvoice, invoice.dateLastModificationInvoice) &&
+				Objects.equals(archived, invoice.archived) &&
+				Objects.equals(invoiceDetails, invoice.invoiceDetails) &&
+				Objects.equals(supplier, invoice.supplier);
+	}
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(idInvoice, amountDiscount, amountInvoice, dateCreationInvoice,
+				dateLastModificationInvoice, archived, invoiceDetails, supplier);
+	}
 
 	
 }
